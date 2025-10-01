@@ -1,0 +1,10 @@
+_minted-report/
+
+*.aux
+*.log
+*.synctex.gz
+
+.vscode/
+
+*.pdf
+*.tex
