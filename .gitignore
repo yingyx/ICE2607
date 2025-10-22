@@ -1,10 +1,16 @@
+__pycache__
+
 _minted-report/
 
 *.aux
 *.log
 *.synctex.gz
+*.out
+*.toc
 
 .vscode/
 
-*.pdf
+report.pdf
 *.tex
+
+*.zip
