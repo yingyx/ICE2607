@@ -17,3 +17,5 @@ conda install --file requirements.txt
 ```bash
 python lab2.py
 ```
+
+Note: Changing the file structure may result in the failure to save images without any warnings.
