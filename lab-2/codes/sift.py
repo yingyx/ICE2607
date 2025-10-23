@@ -2,18 +2,19 @@ import cv2
 import numpy as np
 import math
 from typing import List
+import logging
+import sys
+from functools import cmp_to_key
 
 NUM_REGIONS = 4
 REGION_SIZE = 4
-WINDOW_WIDTH = 1
 NUM_BINS = 8
 
 class Octave:
     def __init__(self, img: cv2.typing.MatLike):
         self.img = img
-        h, w = img.shape
-        self.mag = np.zeros((h, w))
-        self.angle = np.zeros((h, w))
+        self.mag = np.zeros(self.img.shape)
+        self.angle = np.zeros(self.img.shape)
         self.compute_mag_and_angle()
         
     def compute_mag_and_angle(self):
@@ -76,6 +77,8 @@ class SIFT:
                 more_kps.append(cv2.KeyPoint(p.pt[0], p.pt[1], p.size, int(second_max_bin_id * 10 + 5)))
                 
         kp.extend(more_kps)
+        
+        logging.info(f'Assigned different orientations to {len(more_kps)} ({round(len(more_kps) / (len(kp) - len(more_kps)) * 100, 1)}%) keypoints.')
 
     def get_val_by_interpolation(self, mat: np.ndarray, x, y): # bilinear interpolation
         h, w = mat.shape
@@ -92,6 +95,29 @@ class SIFT:
         )
         return val
     
+    def compare_kp(self, a: cv2.KeyPoint, b: cv2.KeyPoint):
+        if a.pt[0] != b.pt[0]:
+            return a.pt[0] - b.pt[0]
+        if a.pt[1] != b.pt[1]:
+            return a.pt[1] - b.pt[1]
+        return b.size - a.size
+    
+    def remove_duplicate_kp(self, kp: List[cv2.KeyPoint]):
+        if not len(kp):
+            return []
+        unique_kps = [kp[0]]
+        kp.sort(key=cmp_to_key(self.compare_kp))
+        i = 0
+        for p in kp[1:]:
+            if kp[i].pt == p.pt and kp[i].size > p.size:
+                    continue
+            i += 1
+            unique_kps.append(p)
+            
+        logging.info(f'Removed {len(kp) - len(unique_kps)} duplicate keypoints.')
+            
+        return unique_kps
+    
     def get_des(self, kp: List[cv2.KeyPoint]):
         des = []
         
@@ -103,7 +129,7 @@ class SIFT:
             img, mag, angle = octave.img, octave.mag, octave.angle
             
             sub_width = 3 * 0.5 * p.size * scale
-            radius = np.round(sub_width * (4 + 1) * math.sqrt(2) * 0.5).astype(int)
+            radius = np.round(sub_width * (NUM_REGIONS + 1) * math.sqrt(2) * 0.5).astype(int)
             
             x, y = int(p.pt[0] * scale), int(p.pt[1] * scale)
             orient = p.angle
@@ -149,19 +175,24 @@ class SIFT:
     # main function
     def detectAndCompute(self, base_img: cv2.typing.MatLike, mask: None = None):
         self.__init__()
-        num_octaves = int(round(math.log(min(base_img.shape)) / math.log(2) - 5))
+        logging.basicConfig(handlers=[logging.StreamHandler(sys.stdout)], level=logging.INFO)
         
         self.octaves.append(Octave(base_img))
-        for i in range(num_octaves):
+        logging.info(f'Initialized SIFT class with base image of size {base_img.shape}.')
+        
+        num_octaves = int(round(math.log(min(base_img.shape)) / math.log(2) - 4))
+        for i in range(num_octaves - 1):
             last_img = self.octaves[i].img
             img = cv2.resize(last_img, (int(last_img.shape[1] / 2), int(last_img.shape[0] / 2))) # add Gaussian blur 1.6?
             self.octaves.append(Octave(img))
+            logging.info(f'Added octave No.{i + 1} from image of size {img.shape}.')
         
         all_kps = []
         
         for octave_index, octave in enumerate(self.octaves):
             img = octave.img
             kps: List[cv2.KeyPoint] = self.get_kp(img)
+            logging.info(f'Detected {len(kps)} keypoints from octave No.{octave_index}.')
             for kp in kps:
                 kp.size = 2 ** (octave_index + 1)
                 kp.pt = tuple(np.array(kp.pt) * (2 ** (octave_index)))
@@ -169,6 +200,7 @@ class SIFT:
             all_kps.extend(kps)
         
         self.compute_kp_orient(all_kps)
+        all_kps = self.remove_duplicate_kp(all_kps)
         
         des = self.get_des(all_kps)
         

@@ -3,7 +3,7 @@ import cv2
 def load_image(path: str):
     img = cv2.imread(path)
     if img is None:
-        raise FileNotFoundError(f"无法加载图片：{path}")
+        raise FileNotFoundError(f"Failed to load image: {path}")
     return img
 
 def load_dataset_and_target(
