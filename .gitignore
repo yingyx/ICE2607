@@ -7,10 +7,13 @@ _minted-report/
 *.synctex.gz
 *.out
 *.toc
+*.bbl
+*.blg
 
 .vscode/
 
 report.pdf
 *.tex
+*.bib
 
 *.zip

@@ -1,11 +1,5 @@
 import cv2
 
-def load_image(path: str):
-    img = cv2.imread(path)
-    if img is None:
-        raise FileNotFoundError(f"Failed to load image: {path}")
-    return img
-
 def load_dataset_and_target(
     dataset_path: str = 'images/dataset/',
     dataset_names: list[str] = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
@@ -28,7 +22,18 @@ def save_output(
     for _, img in enumerate(imgs):
         path = output_path + f"{_ + 1}"
         if suffix:
-            path += "-" + suffix
-        path += ".png"
+            path += '-' + suffix
+        path += '.png'
         
         cv2.imwrite(path, img)
+        
+def save_single_image(
+    img: cv2.typing.MatLike,
+    name: str,
+    path: str
+):
+    
+    if not name or not path:
+        return
+    
+    cv2.imwrite(path + name + '.png', img)

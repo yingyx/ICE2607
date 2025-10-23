@@ -11,8 +11,6 @@ def match(sift, dataset, target):
         matches = bf.knnMatch(des_target, des, k=2)
         good_matches = [m for m, n in matches if m.distance < 0.7 * n.distance]
         matched_img = cv2.drawMatches(target, kp_target, img, kp, good_matches, img, flags=2)
-        # cv2.imshow('1', matched_img)
-        # cv2.waitKey(0)
         result.append(matched_img)
     return result
 
