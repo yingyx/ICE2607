@@ -17,3 +17,5 @@ report.pdf
 *.bib
 
 *.zip
+
+cifar-*
