@@ -20,7 +20,7 @@ trans = transforms.Compose([
 ])
 
 print('Prepare image data!')
-test_image = default_loader('panda.jpg')
+test_image = default_loader('panda.png')
 input_image = trans(test_image)
 input_image = torch.unsqueeze(input_image, 0)
 
