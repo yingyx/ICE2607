@@ -28,8 +28,6 @@ python exp2.py
 
 #### CNN
 
-:
-
 For extracting the feature of `panda.png`, under the `codes/CNN` folder:
 
 ```bash
