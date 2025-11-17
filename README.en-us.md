@@ -22,10 +22,10 @@ The repository contains the report and code for four labs from *Video Multimedia
 
 ## Contents
 
-- Lab 1: [OpenCV](lab-1) (10/10)
-- Lab 2: [SIFT](lab-2) (20/20)
-- Lab 3: [LSH](lab-3) (10/10)
-- Lab 4: [PyTorch & CNN](lab-4) (?/10)
+- Lab 1: [OpenCV](1-OpenCV) (10/10)
+- Lab 2: [SIFT](2-SIFT) (20/20)
+- Lab 3: [LSH](3-LSH) (10/10)
+- Lab 4: [PyTorch & CNN](4-PyTorch_CNN) (?/10)
 
 ## Structure
 

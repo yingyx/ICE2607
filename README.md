@@ -22,10 +22,10 @@
 
 ## 目录
 
-- 实验1：[OpenCV](lab-1)（10/10）
-- 实验2：[SIFT](lab-2)（20/20）
-- 实验3：[LSH](lab-3)（10/10）
-- 实验4：[PyTorch 与 CNN](lab-4)（?/10）
+- 实验1：[OpenCV](1-OpenCV)（10/10）
+- 实验2：[SIFT](2-SIFT)（20/20）
+- 实验3：[LSH](3-LSH)（10/10）
+- 实验4：[PyTorch 与 CNN](4-PyTorch_CNN)（?/10）
 
 ## 文件结构
 
