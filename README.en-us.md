@@ -25,7 +25,7 @@ The repository contains the report and code for four labs from *Video Multimedia
 - Lab 1: [OpenCV](1-OpenCV) (10/10)
 - Lab 2: [SIFT](2-SIFT) (20/20)
 - Lab 3: [LSH](3-LSH) (10/10)
-- Lab 4: [PyTorch & CNN](4-PyTorch_CNN) (?/10)
+- Lab 4: [PyTorch & CNN](4-PyTorch_CNN) (10/10)
 
 ## Structure
 
@@ -40,5 +40,9 @@ The repository contains the report and code for four labs from *Video Multimedia
       ├─report-pub.pdf
       └─images
 ```
+
+## Disclaimer
+
+Some materials in this repository are collected from the Internet or provided as part of the course assignments. They are provided for educational purposes only.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

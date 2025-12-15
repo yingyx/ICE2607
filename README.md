@@ -25,7 +25,7 @@
 - 实验1：[OpenCV](1-OpenCV)（10/10）
 - 实验2：[SIFT](2-SIFT)（20/20）
 - 实验3：[LSH](3-LSH)（10/10）
-- 实验4：[PyTorch 与 CNN](4-PyTorch_CNN)（?/10）
+- 实验4：[PyTorch 与 CNN](4-PyTorch_CNN)（10/10）
 
 ## 文件结构
 
@@ -40,5 +40,9 @@
       ├─report-pub.pdf # 报告 PDF 文件
       └─images # 报告附图
 ```
+
+## 声明
+
+本仓库中的部分资料来源于互联网或课程作业所附文件，这些内容仅用于学习目的。
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
